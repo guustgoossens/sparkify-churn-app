@@ -6,6 +6,9 @@ A Streamlit app that explores **who cancels a music-streaming subscription, what
 they do before leaving, and how early we can tell**, packaged with tests, CI and
 a Docker image.
 
+**Live app:** https://pythondskaggle-owncfxclan5u5mycuzbsw4.streamlit.app ·
+**Image:** [`rolimups/churn-explorer`](https://hub.docker.com/r/rolimups/churn-explorer)
+
 It is the app version of a churn-prediction Kaggle project done for the *Python
 for Data Science* course at École Polytechnique (2025–26) with Litong Hou
 ([original notebooks and report](https://github.com/guustgoossens/python_ds_kaggle)).
