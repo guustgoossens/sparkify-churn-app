@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Tooling
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Data: only the small bundled sample is versioned
+data/*
+!data/sample_events.parquet
+
+# Local secrets / OS / editors
+.env*
+.streamlit/secrets.toml
+.DS_Store
+.idea/
+.vscode/
