@@ -11,6 +11,10 @@ RETAINED, CHURNED = "#2a78d6", "#eb6834"
 STATUS_DOMAIN = ["Retained", "Churned"]
 STATUS_SCALE = alt.Scale(domain=STATUS_DOMAIN, range=[RETAINED, CHURNED])
 MUTED, GRID = "#898781", "#e1e0d9"
+# Daily bars span an explicit start -> end so their width scales with the axis.
+# (Bars on a time-unit axis collapse to hairlines in narrow columns.) The 3h
+# shortfall leaves a visible gap between neighbouring days.
+DAY_BAR = pd.DateOffset(hours=21)
 
 
 def style(chart: alt.Chart, height: int = 280) -> alt.Chart:
@@ -64,12 +68,14 @@ def daily_cancellations(events: pd.DataFrame, churn_page: str) -> alt.Chart:
         .size()
         .rename("cancellations")
         .reset_index()
+        .assign(day_end=lambda d: d["day"] + DAY_BAR)
     )
     bars = (
         alt.Chart(daily)
-        .mark_bar(color=CHURNED, cornerRadiusTopLeft=3, cornerRadiusTopRight=3)
+        .mark_bar(color=CHURNED, orient="vertical")
         .encode(
-            x=alt.X("yearmonthdate(day):T", title=None),
+            x=alt.X("day:T", title=None),
+            x2="day_end:T",
             y=alt.Y(
                 "cancellations:Q", title="Cancellations", axis=alt.Axis(tickMinStep=1)
             ),
@@ -221,12 +227,14 @@ def user_timeline(user_events: pd.DataFrame) -> alt.Chart:
         .size()
         .rename("events")
         .reset_index()
+        .assign(day_end=lambda d: d["day"] + DAY_BAR)
     )
     bars = (
         alt.Chart(daily)
-        .mark_bar(cornerRadiusTopLeft=2, cornerRadiusTopRight=2)
+        .mark_bar(orient="vertical")
         .encode(
-            x=alt.X("yearmonthdate(day):T", title=None),
+            x=alt.X("day:T", title=None),
+            x2="day_end:T",
             y=alt.Y("events:Q", title="Events per day"),
             color=alt.Color(
                 "kind:N",
