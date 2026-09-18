@@ -45,10 +45,19 @@ that never saw them.
 
 ### With Docker
 
+A prebuilt image (linux/amd64 and linux/arm64) is on
+[Docker Hub](https://hub.docker.com/r/rolimups/churn-explorer):
+
+```bash
+docker run --rm -p 8501:8501 rolimups/churn-explorer:latest
+# open http://localhost:8501
+```
+
+Or build it yourself:
+
 ```bash
 docker build -t churn-explorer .
 docker run --rm -p 8501:8501 churn-explorer
-# open http://localhost:8501
 ```
 
 To run on the full dataset instead of the bundled sample, mount it and point the
